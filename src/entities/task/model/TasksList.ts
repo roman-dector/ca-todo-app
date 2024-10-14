@@ -7,6 +7,14 @@ export interface TasksSplittedByStatus {
   completed: TaskEntry[]
 }
 
+export const tasksSplittedByStatus = (
+  data: Partial<TasksSplittedByStatus> = {}
+): TasksSplittedByStatus => ({
+  active: [],
+  completed: [],
+  ...data,
+})
+
 export class TasksList {
   active: Map<TaskId, Task>
   completed: Map<TaskId, Task>

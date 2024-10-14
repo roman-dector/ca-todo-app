@@ -7,11 +7,13 @@ import {
 import { TasksListViewModel } from "./TasksListViewModel"
 
 const taskPresentation = ({
+  id,
   title,
   description,
   status,
 }: Task): TaskUiState =>
   new TaskUiState({
+    id,
     title,
     description,
     isCompleted: status === "completed",

@@ -1,4 +1,7 @@
+import { genTaskId, TaskId } from "entities/task"
+
 export class TaskUiState {
+  id: TaskId
   title: string
   description: string
   isCompleted: boolean
@@ -11,6 +14,7 @@ export class TaskUiState {
 export const taskUiState = (
   data: Partial<TaskUiState> = {}
 ): TaskUiState => ({
+  id: genTaskId(),
   title: "",
   description: "",
   isCompleted: false,
