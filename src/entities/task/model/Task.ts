@@ -10,3 +10,11 @@ export interface Task {
 }
 
 export const genTaskId = () => crypto.randomUUID() as TaskId
+
+export const testTask = (data: Partial<Task> = {}): Task => ({
+  id: genTaskId(),
+  title: "title",
+  description: "description",
+  status: "active",
+  ...data,
+})
