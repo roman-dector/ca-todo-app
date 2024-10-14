@@ -1,14 +1,20 @@
-import { TaskId, TasksList, TasksRepository } from "entities/task"
+import {
+  TaskId,
+  TasksListBuilder,
+  TasksRepository,
+} from "entities/task"
 
 export class CompleteTaskUseCase {
   constructor(
-    private readonly tasksList: TasksList,
+    private readonly tasksListBuilder: TasksListBuilder,
     private readonly tasksRepository: TasksRepository
   ) {}
 
   public async complete(id: TaskId) {
-    this.tasksList.complete(id)
+    const tasksList = await this.tasksListBuilder.build()
 
-    await this.tasksRepository.updateTasks(this.tasksList)
+    tasksList.complete(id)
+
+    await this.tasksRepository.updateTasks(tasksList)
   }
 }

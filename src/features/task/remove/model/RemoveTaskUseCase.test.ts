@@ -4,10 +4,10 @@ import { RemoveTaskUseCase } from "./RemoveTaskUseCase"
 
 import {
   TasksInMemoryDataSource,
-  TasksList,
   TasksRepository,
   Task,
   genTaskId,
+  TasksListBuilder,
 } from "entities/task"
 
 it("task removes from active state", async () => {
@@ -19,17 +19,16 @@ it("task removes from active state", async () => {
     status: "active",
   }
 
-  const tasksList = new TasksList({
-    active: [[task.id, task]],
-    completed: [],
-  })
-
   const tasksDataSource = new TasksInMemoryDataSource()
+  await tasksDataSource.update([task])
+
   const tasksRepository = new TasksRepository(tasksDataSource)
-  const sut = new RemoveTaskUseCase(tasksList, tasksRepository)
+  const tasksListBuilder = new TasksListBuilder(tasksRepository)
+
+  const sut = new RemoveTaskUseCase(tasksListBuilder, tasksRepository)
 
   // Act
-  sut.remove(task.id)
+  await sut.remove(task.id)
 
   // Assert
   const tasks = await tasksRepository.fetchAll()
@@ -42,20 +41,19 @@ it("task removes from completed state", async () => {
     id: genTaskId(),
     title: "title",
     description: "description",
-    status: "active",
+    status: "completed",
   }
 
-  const tasksList = new TasksList({
-    active: [],
-    completed: [[task.id, task]],
-  })
-
   const tasksDataSource = new TasksInMemoryDataSource()
+  await tasksDataSource.update([task])
+
   const tasksRepository = new TasksRepository(tasksDataSource)
-  const sut = new RemoveTaskUseCase(tasksList, tasksRepository)
+  const tasksListBuilder = new TasksListBuilder(tasksRepository)
+
+  const sut = new RemoveTaskUseCase(tasksListBuilder, tasksRepository)
 
   // Act
-  sut.remove(task.id)
+  await sut.remove(task.id)
 
   // Assert
   const tasks = await tasksRepository.fetchAll()

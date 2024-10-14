@@ -1,7 +1,7 @@
 import {
   genTaskId,
   Task,
-  TasksList,
+  TasksListBuilder,
   TasksRepository,
 } from "entities/task"
 
@@ -9,7 +9,7 @@ export type NewTaskData = Pick<Task, "title" | "description">
 
 export class AddTaskUseCase {
   constructor(
-    private readonly tasksList: TasksList,
+    private readonly tasksListBuilder: TasksListBuilder,
     private readonly tasksRepository: TasksRepository
   ) {}
 
@@ -22,12 +22,14 @@ export class AddTaskUseCase {
       return
     }
 
-    this.tasksList.add({
+    const tasksList = await this.tasksListBuilder.build()
+
+    tasksList.add({
       id: genTaskId(),
       status: "active",
       ...data,
     })
 
-    await this.tasksRepository.updateTasks(this.tasksList)
+    await this.tasksRepository.updateTasks(tasksList)
   }
 }

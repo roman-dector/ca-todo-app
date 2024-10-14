@@ -4,10 +4,10 @@ import { CompleteTaskUseCase } from "./CompleteTaskUseCase"
 
 import {
   TasksInMemoryDataSource,
-  TasksList,
   TasksRepository,
   Task,
   genTaskId,
+  TasksListBuilder,
 } from "entities/task"
 
 it("completed task moves to completed array", async () => {
@@ -19,17 +19,19 @@ it("completed task moves to completed array", async () => {
     status: "active",
   }
 
-  const tasksList = new TasksList({
-    active: [[task.id, task]],
-    completed: [],
-  })
-
   const tasksDataSource = new TasksInMemoryDataSource()
+  await tasksDataSource.update([task])
+
   const tasksRepository = new TasksRepository(tasksDataSource)
-  const sut = new CompleteTaskUseCase(tasksList, tasksRepository)
+  const tasksListBuilder = new TasksListBuilder(tasksRepository)
+
+  const sut = new CompleteTaskUseCase(
+    tasksListBuilder,
+    tasksRepository
+  )
 
   // Act
-  sut.complete(task.id)
+  await sut.complete(task.id)
 
   // Assert
   const tasks = await tasksRepository.fetchAll()
@@ -47,18 +49,20 @@ it("task completes only ones", async () => {
     status: "active",
   }
 
-  const tasksList = new TasksList({
-    active: [[task.id, task]],
-    completed: [],
-  })
-
   const tasksDataSource = new TasksInMemoryDataSource()
+  await tasksDataSource.update([task])
+
   const tasksRepository = new TasksRepository(tasksDataSource)
-  const sut = new CompleteTaskUseCase(tasksList, tasksRepository)
+  const tasksListBuilder = new TasksListBuilder(tasksRepository)
+
+  const sut = new CompleteTaskUseCase(
+    tasksListBuilder,
+    tasksRepository
+  )
 
   // Act
-  sut.complete(task.id)
-  sut.complete(task.id)
+  await sut.complete(task.id)
+  await sut.complete(task.id)
 
   // Assert
   const tasks = await tasksRepository.fetchAll()

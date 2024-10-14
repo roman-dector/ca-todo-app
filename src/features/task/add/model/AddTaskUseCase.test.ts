@@ -3,7 +3,7 @@ import { it, expect } from "vitest"
 import { AddTaskUseCase, NewTaskData } from "./AddTaskUseCase"
 import {
   TasksInMemoryDataSource,
-  TasksList,
+  TasksListBuilder,
   TasksRepository,
 } from "entities/task"
 
@@ -14,13 +14,13 @@ it("task with filled title and description is added", async () => {
     description: "description",
   }
 
-  const tasksList = new TasksList({ active: [], completed: [] })
   const tasksDataSource = new TasksInMemoryDataSource()
   const tasksRepository = new TasksRepository(tasksDataSource)
-  const sut = new AddTaskUseCase(tasksList, tasksRepository)
+  const tasksListBuilder = new TasksListBuilder(tasksRepository)
+  const sut = new AddTaskUseCase(tasksListBuilder, tasksRepository)
 
   // Act
-  sut.add(data)
+  await sut.add(data)
 
   // Assert
   const tasks = await tasksRepository.fetchAll()
@@ -34,13 +34,13 @@ it("newly added task has active status", async () => {
     description: "description",
   }
 
-  const tasksList = new TasksList({ active: [], completed: [] })
   const tasksDataSource = new TasksInMemoryDataSource()
   const tasksRepository = new TasksRepository(tasksDataSource)
-  const sut = new AddTaskUseCase(tasksList, tasksRepository)
+  const tasksListBuilder = new TasksListBuilder(tasksRepository)
+  const sut = new AddTaskUseCase(tasksListBuilder, tasksRepository)
 
   // Act
-  sut.add(data)
+  await sut.add(data)
 
   // Assert
   const tasks = await tasksRepository.fetchAll()
@@ -54,13 +54,13 @@ it("task with empty title is not added", async () => {
     description: "description",
   }
 
-  const tasksList = new TasksList({ active: [], completed: [] })
   const tasksDataSource = new TasksInMemoryDataSource()
   const tasksRepository = new TasksRepository(tasksDataSource)
-  const sut = new AddTaskUseCase(tasksList, tasksRepository)
+  const tasksListBuilder = new TasksListBuilder(tasksRepository)
+  const sut = new AddTaskUseCase(tasksListBuilder, tasksRepository)
 
   // Act
-  sut.add(data)
+  await sut.add(data)
 
   // Assert
   const tasks = await tasksRepository.fetchAll()
@@ -74,13 +74,13 @@ it("task with empty description is not added", async () => {
     description: "",
   }
 
-  const tasksList = new TasksList({ active: [], completed: [] })
   const tasksDataSource = new TasksInMemoryDataSource()
   const tasksRepository = new TasksRepository(tasksDataSource)
-  const sut = new AddTaskUseCase(tasksList, tasksRepository)
+  const tasksListBuilder = new TasksListBuilder(tasksRepository)
+  const sut = new AddTaskUseCase(tasksListBuilder, tasksRepository)
 
   // Act
-  sut.add(data)
+  await sut.add(data)
 
   // Assert
   const tasks = await tasksRepository.fetchAll()

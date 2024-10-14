@@ -4,10 +4,10 @@ import { ReopenTaskUseCase } from "./ReopenTaskUseCase"
 
 import {
   TasksInMemoryDataSource,
-  TasksList,
   TasksRepository,
   Task,
   genTaskId,
+  TasksListBuilder,
 } from "entities/task"
 
 it("reopen task moves to active array", async () => {
@@ -16,20 +16,19 @@ it("reopen task moves to active array", async () => {
     id: genTaskId(),
     title: "title",
     description: "description",
-    status: "active",
+    status: "completed",
   }
 
-  const tasksList = new TasksList({
-    active: [],
-    completed: [[task.id, task]],
-  })
-
   const tasksDataSource = new TasksInMemoryDataSource()
+  await tasksDataSource.update([task])
+
   const tasksRepository = new TasksRepository(tasksDataSource)
-  const sut = new ReopenTaskUseCase(tasksList, tasksRepository)
+  const tasksListBuilder = new TasksListBuilder(tasksRepository)
+
+  const sut = new ReopenTaskUseCase(tasksListBuilder, tasksRepository)
 
   // Act
-  sut.reopen(task.id)
+  await sut.reopen(task.id)
 
   // Assert
   const tasks = await tasksRepository.fetchAll()
@@ -42,21 +41,20 @@ it("tasks reopens only ones", async () => {
     id: genTaskId(),
     title: "title",
     description: "description",
-    status: "active",
+    status: "completed",
   }
 
-  const tasksList = new TasksList({
-    active: [],
-    completed: [[task.id, task]],
-  })
-
   const tasksDataSource = new TasksInMemoryDataSource()
+  await tasksDataSource.update([task])
+
   const tasksRepository = new TasksRepository(tasksDataSource)
-  const sut = new ReopenTaskUseCase(tasksList, tasksRepository)
+  const tasksListBuilder = new TasksListBuilder(tasksRepository)
+
+  const sut = new ReopenTaskUseCase(tasksListBuilder, tasksRepository)
 
   // Act
-  sut.reopen(task.id)
-  sut.reopen(task.id)
+  await sut.reopen(task.id)
+  await sut.reopen(task.id)
 
   // Assert
   const tasks = await tasksRepository.fetchAll()
