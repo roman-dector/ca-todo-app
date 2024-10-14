@@ -2,14 +2,17 @@ import { useCallback, useState } from "react"
 
 import { AddTaskUseCase, NewTaskData } from "features/task"
 
+import { container } from "shared/di"
+import { EventBus } from "shared/event-bus"
+
 import {
   addTaskFormPresentation,
   AddTaskFormViewModel,
 } from "../model"
-import { container } from "shared/di"
 
 export const useAddTaskFormViewModel = (
-  addTaskUseCase = container.get<AddTaskUseCase>()
+  addTaskUseCase = container.get<AddTaskUseCase>(),
+  eventBus = container.get<EventBus>()
 ): AddTaskFormViewModel => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -30,6 +33,7 @@ export const useAddTaskFormViewModel = (
     addTask: async (data: NewTaskData) => {
       await addTaskUseCase.add(data)
       resetFields()
+      eventBus.publish("newTaskAdded")
     },
   }
 }
