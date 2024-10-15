@@ -7,6 +7,7 @@ import { useTasksListViewModel } from "./viewModel"
 import { Task } from "./Task"
 
 import s from "./TasksList.module.css"
+import { TasksViewFilter } from "./TasksViewFilter"
 
 export const TasksList = () => {
   const vm = useTasksListViewModel()
@@ -16,28 +17,38 @@ export const TasksList = () => {
 
 export const TasksListView: FC<TasksListViewModel> = ({
   uiState,
+  switchView,
   completeTask,
   removeTask,
   reopenTask,
 }) => {
-  if (uiState instanceof EmptyTasksListUiState) {
-    return <p className={s.emptyMessage}>{uiState.message}</p>
-  }
+  const isEmpty = uiState instanceof EmptyTasksListUiState
 
   return (
-    <ol className={s.list}>
-      {uiState.tasks.map(task => (
-        <li>
-          <Task
-            key={task.id}
-            uiState={task}
-            onRemove={removeTask}
-            onStatusChange={
-              task.isCompleted ? reopenTask : completeTask
-            }
-          />
-        </li>
-      ))}
-    </ol>
+    <section className={s.container}>
+      <TasksViewFilter
+        selected={uiState.view}
+        onViewSelect={switchView}
+      />
+
+      {isEmpty ? (
+        <p className={s.emptyMessage}>{uiState.message}</p>
+      ) : (
+        <ol className={s.list}>
+          {uiState.tasks.map(task => (
+            <li>
+              <Task
+                key={task.id}
+                uiState={task}
+                onRemove={removeTask}
+                onStatusChange={
+                  task.isCompleted ? reopenTask : completeTask
+                }
+              />
+            </li>
+          ))}
+        </ol>
+      )}
+    </section>
   )
 }

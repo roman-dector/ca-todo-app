@@ -8,12 +8,13 @@
 
 .heading {
   font-size: 80px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
 .content {
   display: flex;
   flex-flow: column;
+  gap: 20px;
   align-items: center;
 
   width: 400px;

@@ -37,7 +37,7 @@ export const tasksListPresentation = (
       tasks = active.concat(completed)
 
       if (tasks.length === 0) {
-        return new EmptyTasksListUiState()
+        return new EmptyTasksListUiState({ view: "all" })
       }
 
       break
@@ -48,6 +48,7 @@ export const tasksListPresentation = (
       if (tasks.length === 0) {
         return new EmptyTasksListUiState({
           message: "No active tasks",
+          view,
         })
       }
       break
@@ -58,6 +59,7 @@ export const tasksListPresentation = (
       if (tasks.length === 0) {
         return new EmptyTasksListUiState({
           message: "No completed tasks",
+          view,
         })
       }
 

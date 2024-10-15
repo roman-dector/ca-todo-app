@@ -2,6 +2,10 @@
   font-size: 30px;
 }
 
+.container {
+  width: 100%;
+}
+
 .list {
   display: flex;
   flex-flow: column;

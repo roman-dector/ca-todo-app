@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.list {
+  display: flex;
+  gap: 10px;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.selected {
+  color: #ee6c4d;
+  cursor: default;
+}
