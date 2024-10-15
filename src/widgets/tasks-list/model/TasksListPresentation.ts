@@ -51,7 +51,11 @@ export const tasksListPresentation = (
       tasks = active.concat(completed)
 
       if (tasks.length === 0) {
-        return new EmptyTasksListUiState({ view, tasksCount })
+        return new EmptyTasksListUiState({
+          message: "Nothing to do",
+          view,
+          tasksCount,
+        })
       }
 
       break

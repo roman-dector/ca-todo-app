@@ -51,11 +51,11 @@ export const tasksListUiState = (
 })
 
 export class EmptyTasksListUiState {
-  message?: string = "Nothing to do"
+  message: string
   view: TasksListView
   tasksCount: TasksCount
 
-  constructor(arg?: EmptyTasksListUiState) {
+  constructor(arg: EmptyTasksListUiState) {
     Object.assign(this, arg)
   }
 }
