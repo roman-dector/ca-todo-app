@@ -16,6 +16,7 @@
     "@wessberg/di": "^2.1.0",
     "@wessberg/di-compiler": "^4.0.1",
     "classnames": "^2.5.1",
+    "localforage": "^1.10.0",
     "nanoevents": "^9.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -35,19 +35,21 @@ export const TasksListView: FC<TasksListViewModel> = ({
       {isEmpty ? (
         <p className={s.emptyMessage}>{uiState.message}</p>
       ) : (
-        <ol className={s.list}>
-          {uiState.tasks.map(task => (
-            <li key={task.id}>
-              <Task
-                uiState={task}
-                onRemove={removeTask}
-                onStatusChange={
-                  task.isCompleted ? reopenTask : completeTask
-                }
-              />
-            </li>
-          ))}
-        </ol>
+        <>
+          <ol className={s.list}>
+            {uiState.tasks.map(task => (
+              <li key={task.id}>
+                <Task
+                  uiState={task}
+                  onRemove={removeTask}
+                  onStatusChange={
+                    task.isCompleted ? reopenTask : completeTask
+                  }
+                />
+              </li>
+            ))}
+          </ol>
+        </>
       )}
     </section>
   )

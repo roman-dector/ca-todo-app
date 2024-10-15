@@ -7,8 +7,8 @@ import {
 
 import {
   TasksDataSource,
-  TasksInMemoryDataSource,
   TasksListBuilder,
+  TasksLocalDbDataSource,
   TasksRepository,
 } from "entities/task"
 
@@ -26,7 +26,4 @@ container.registerSingleton<TasksListBuilder>()
 
 container.registerSingleton<TasksRepository>()
 
-container.registerSingleton<
-  TasksDataSource,
-  TasksInMemoryDataSource
->()
+container.registerSingleton<TasksDataSource, TasksLocalDbDataSource>()
