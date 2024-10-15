@@ -1,4 +1,3 @@
-// import "@mantine/core/styles.css"
 import "./styles/index.css"
 
 import { TasksList } from "widgets/tasks-list"

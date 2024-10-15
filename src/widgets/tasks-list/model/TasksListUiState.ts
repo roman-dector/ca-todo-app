@@ -1,6 +1,9 @@
 import { genTaskId, TaskId } from "entities/task"
 
 export type TasksListView = "all" | "active" | "completed"
+
+export type TasksListStatus = "initial" | "loading" | "idle"
+
 export type TasksCount = {
   all: number
   active: number
@@ -56,3 +59,5 @@ export class EmptyTasksListUiState {
     Object.assign(this, arg)
   }
 }
+
+export class TasksLoadingUiState {}

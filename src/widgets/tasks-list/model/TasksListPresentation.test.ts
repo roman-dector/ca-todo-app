@@ -5,8 +5,13 @@ import {
   EmptyTasksListUiState,
   TasksListUiState,
   TasksListView,
+  TasksLoadingUiState,
 } from "./TasksListUiState"
-import { TasksSplittedByStatus, testTask } from "entities/task"
+import {
+  tasksSplittedByStatus,
+  TasksSplittedByStatus,
+  testTask,
+} from "entities/task"
 
 it.each<TasksListView>(["all", "active", "completed"])(
   "showing empty list state when no %s tasks",
@@ -18,7 +23,7 @@ it.each<TasksListView>(["all", "active", "completed"])(
     }
 
     // Act
-    const uiState = tasksListPresentation(appState, view)
+    const uiState = tasksListPresentation(appState, view, "idle")
 
     // Assert
     expect(uiState).instanceOf(EmptyTasksListUiState)
@@ -39,8 +44,24 @@ it.each<TasksListView>(["all", "active", "completed"])(
       completed: [[task.id, task]],
     }
 
-    const uiState = tasksListPresentation(appState, view)
+    const uiState = tasksListPresentation(appState, view, "idle")
 
     expect(uiState).instanceOf(TasksListUiState)
   }
 )
+
+it("showing loader on initial render", () => {
+  const appState = tasksSplittedByStatus()
+
+  const uiState = tasksListPresentation(appState, "all", "initial")
+
+  expect(uiState).instanceOf(TasksLoadingUiState)
+})
+
+it("showing loader when tasks loading", () => {
+  const appState = tasksSplittedByStatus()
+
+  const uiState = tasksListPresentation(appState, "all", "loading")
+
+  expect(uiState).instanceOf(TasksLoadingUiState)
+})

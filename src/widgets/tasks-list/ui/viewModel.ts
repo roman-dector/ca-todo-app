@@ -17,10 +17,13 @@ import { container } from "shared/di"
 
 import {
   tasksListPresentation,
-  TasksListView,
-  TasksListViewModel,
+  type TasksListView,
+  type TasksListViewModel,
+  type TasksListStatus,
 } from "../model"
+
 import { EventBus } from "shared/event-bus"
+import { asyncDelay } from "shared/lib"
 
 export const useTasksListViewModel = (
   completeTaskUseCase = container.get<CompleteTaskUseCase>(),
@@ -35,13 +38,22 @@ export const useTasksListViewModel = (
 
   const [listView, setListView] = useState<TasksListView>("all")
 
+  const [listStatus, setListStatus] =
+    useState<TasksListStatus>("initial")
+
   const fetchTasks = useCallback(async () => {
     const tasks = await tasksRepository.fetchAll()
     setTasks(tasks)
   }, [tasksRepository, setTasks])
 
   useEffect(() => {
-    fetchTasks()
+    void (async () => {
+      setListStatus("loading")
+
+      await asyncDelay(fetchTasks, 300)
+
+      setListStatus("idle")
+    })()
   }, [fetchTasks])
 
   useEffect(
@@ -50,7 +62,7 @@ export const useTasksListViewModel = (
   )
 
   return {
-    uiState: tasksListPresentation(tasks, listView),
+    uiState: tasksListPresentation(tasks, listView, listStatus),
 
     switchView: setListView,
 

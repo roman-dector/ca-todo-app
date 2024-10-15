@@ -1,6 +1,10 @@
 import { FC } from "react"
 
-import { EmptyTasksListUiState, TasksListViewModel } from "../model"
+import {
+  EmptyTasksListUiState,
+  TasksListViewModel,
+  TasksLoadingUiState,
+} from "../model"
 
 import { useTasksListViewModel } from "./viewModel"
 
@@ -8,6 +12,7 @@ import { Task } from "./Task"
 
 import s from "./TasksList.module.css"
 import { TasksViewFilter } from "./TasksViewFilter"
+import { Loader } from "shared/ui/loader"
 
 export const TasksList = () => {
   const vm = useTasksListViewModel()
@@ -22,6 +27,10 @@ export const TasksListView: FC<TasksListViewModel> = ({
   removeTask,
   reopenTask,
 }) => {
+  if (uiState instanceof TasksLoadingUiState) {
+    return <Loader />
+  }
+
   const isEmpty = uiState instanceof EmptyTasksListUiState
 
   return (

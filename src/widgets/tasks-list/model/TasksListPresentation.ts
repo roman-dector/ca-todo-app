@@ -5,10 +5,12 @@ import type {
 } from "entities/task"
 import {
   EmptyTasksListUiState,
-  TasksCount,
   TasksListUiState,
-  TasksListView,
   TaskUiState,
+  TasksLoadingUiState,
+  type TasksListStatus,
+  type TasksCount,
+  type TasksListView,
 } from "./TasksListUiState"
 import { TasksListViewModel } from "./TasksListViewModel"
 
@@ -27,8 +29,13 @@ const taskPresentation = ({
 
 export const tasksListPresentation = (
   appState: TasksSplittedByStatus,
-  view: TasksListView
+  view: TasksListView,
+  status: TasksListStatus
 ): TasksListViewModel["uiState"] => {
+  if (status === "initial" || status === "loading") {
+    return new TasksLoadingUiState()
+  }
+
   const { active, completed } = appState
 
   let tasks: TaskEntry[]

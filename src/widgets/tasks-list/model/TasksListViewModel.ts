@@ -3,10 +3,14 @@ import {
   TasksListUiState,
   EmptyTasksListUiState,
   TasksListView,
+  TasksLoadingUiState,
 } from "./TasksListUiState"
 
 export interface TasksListViewModel {
-  uiState: TasksListUiState | EmptyTasksListUiState
+  uiState:
+    | TasksListUiState
+    | EmptyTasksListUiState
+    | TasksLoadingUiState
 
   switchView: (view: TasksListView) => void
 
