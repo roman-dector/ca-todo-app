@@ -5,57 +5,61 @@ import { RemoveTaskUseCase } from "./RemoveTaskUseCase"
 import {
   TasksInMemoryDataSource,
   TasksRepository,
-  Task,
-  genTaskId,
   TasksListBuilder,
+  testTask,
+  TaskStatus,
 } from "entities/task"
 
-it("task removes from active state", async () => {
-  // Arrange
-  const task: Task = {
-    id: genTaskId(),
-    title: "title",
-    description: "description",
-    status: "active",
+it.each<TaskStatus>(["active", "completed"])(
+  "task removes from %s state",
+  async status => {
+    // Arrange
+    const task = testTask({ status })
+
+    const tasksDataSource = new TasksInMemoryDataSource()
+    await tasksDataSource.update([task])
+
+    const tasksRepository = new TasksRepository(tasksDataSource)
+    const tasksListBuilder = new TasksListBuilder(tasksRepository)
+
+    const sut = new RemoveTaskUseCase(
+      tasksListBuilder,
+      tasksRepository
+    )
+
+    // Act
+    await sut.remove(task.id)
+
+    // Assert
+    const tasks = await tasksRepository.fetchAll()
+    expect(tasks[status]).toHaveLength(0)
   }
+)
 
-  const tasksDataSource = new TasksInMemoryDataSource()
-  await tasksDataSource.update([task])
+it.each<TaskStatus>(["active", "completed"])(
+  "removes multiple %s tasks in one transaction",
+  async status => {
+    // Arrange
+    const testTasks = Array(5)
+      .fill(null)
+      .map(() => testTask({ status }))
 
-  const tasksRepository = new TasksRepository(tasksDataSource)
-  const tasksListBuilder = new TasksListBuilder(tasksRepository)
+    const tasksDataSource = new TasksInMemoryDataSource()
+    await tasksDataSource.update(testTasks)
 
-  const sut = new RemoveTaskUseCase(tasksListBuilder, tasksRepository)
+    const tasksRepository = new TasksRepository(tasksDataSource)
+    const tasksListBuilder = new TasksListBuilder(tasksRepository)
 
-  // Act
-  await sut.remove(task.id)
+    const sut = new RemoveTaskUseCase(
+      tasksListBuilder,
+      tasksRepository
+    )
 
-  // Assert
-  const tasks = await tasksRepository.fetchAll()
-  expect(tasks.active).toHaveLength(0)
-})
+    // Act
+    await sut.remove(testTasks.map(({ id }) => id))
 
-it("task removes from completed state", async () => {
-  // Arrange
-  const task: Task = {
-    id: genTaskId(),
-    title: "title",
-    description: "description",
-    status: "completed",
+    // Assert
+    const tasks = await tasksRepository.fetchAll()
+    expect(tasks[status]).toHaveLength(0)
   }
-
-  const tasksDataSource = new TasksInMemoryDataSource()
-  await tasksDataSource.update([task])
-
-  const tasksRepository = new TasksRepository(tasksDataSource)
-  const tasksListBuilder = new TasksListBuilder(tasksRepository)
-
-  const sut = new RemoveTaskUseCase(tasksListBuilder, tasksRepository)
-
-  // Act
-  await sut.remove(task.id)
-
-  // Assert
-  const tasks = await tasksRepository.fetchAll()
-  expect(tasks.completed).toHaveLength(0)
-})
+)

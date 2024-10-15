@@ -10,10 +10,14 @@ export class RemoveTaskUseCase {
     private readonly tasksRepository: TasksRepository
   ) {}
 
-  public async remove(id: TaskId) {
+  public async remove(id: TaskId | TaskId[]) {
     const tasksList = await this.tasksListBuilder.build()
 
-    tasksList.remove(id)
+    if (Array.isArray(id)) {
+      id.forEach(id => tasksList.remove(id))
+    } else {
+      tasksList.remove(id)
+    }
 
     await this.tasksRepository.updateTasks(tasksList)
   }
