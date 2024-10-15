@@ -1,5 +1,7 @@
 import { genTaskId, TaskId } from "entities/task"
 
+export type TasksListView = "all" | "active" | "completed"
+
 export class TaskUiState {
   id: TaskId
   title: string
@@ -23,6 +25,7 @@ export const taskUiState = (
 
 export class TasksListUiState {
   tasks: TaskUiState[]
+  view: TasksListView
 
   constructor(arg: TasksListUiState) {
     Object.assign(this, arg)
@@ -33,6 +36,7 @@ export const tasksListUiState = (
   data: Partial<TasksListUiState> = {}
 ): TasksListUiState => ({
   tasks: [],
+  view: "active",
   ...data,
 })
 

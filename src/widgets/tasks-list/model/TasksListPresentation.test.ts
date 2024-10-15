@@ -4,28 +4,43 @@ import { tasksListPresentation } from "./TasksListPresentation"
 import {
   EmptyTasksListUiState,
   TasksListUiState,
+  TasksListView,
 } from "./TasksListUiState"
 import { TasksSplittedByStatus, testTask } from "entities/task"
 
-it("showing empty list state when no tasks", () => {
-  const appState: TasksSplittedByStatus = {
-    active: [],
-    completed: [],
+it.each<TasksListView>(["all", "active", "completed"])(
+  "showing empty list state when no %s tasks",
+  view => {
+    // Arrange
+    const appState: TasksSplittedByStatus = {
+      active: [],
+      completed: [],
+    }
+
+    // Act
+    const uiState = tasksListPresentation(appState, view)
+
+    // Assert
+    expect(uiState).instanceOf(EmptyTasksListUiState)
+
+    const msg = (uiState as EmptyTasksListUiState).message
+
+    expect(msg).toBeTypeOf("string")
+    expect(msg.length).greaterThan(0)
   }
+)
 
-  const uiState = tasksListPresentation(appState)
+it.each<TasksListView>(["all", "active", "completed"])(
+  "showing existing %s tasks",
+  view => {
+    const task = testTask()
+    const appState: TasksSplittedByStatus = {
+      active: [[task.id, task]],
+      completed: [[task.id, task]],
+    }
 
-  expect(uiState).instanceOf(EmptyTasksListUiState)
-})
+    const uiState = tasksListPresentation(appState, view)
 
-it("showing existing tasks", () => {
-  const task = testTask()
-  const appState: TasksSplittedByStatus = {
-    active: [[task.id, task]],
-    completed: [],
+    expect(uiState).instanceOf(TasksListUiState)
   }
-
-  const uiState = tasksListPresentation(appState)
-
-  expect(uiState).instanceOf(TasksListUiState)
-})
+)

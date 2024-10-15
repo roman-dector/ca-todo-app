@@ -15,7 +15,11 @@ import {
 
 import { container } from "shared/di"
 
-import { tasksListPresentation, TasksListViewModel } from "../model"
+import {
+  tasksListPresentation,
+  TasksListView,
+  TasksListViewModel,
+} from "../model"
 import { EventBus } from "shared/event-bus"
 
 export const useTasksListViewModel = (
@@ -28,6 +32,8 @@ export const useTasksListViewModel = (
   const [tasks, setTasks] = useState<TasksSplittedByStatus>(
     tasksSplittedByStatus()
   )
+
+  const [listView, setListView] = useState<TasksListView>("all")
 
   const fetchTasks = useCallback(async () => {
     const tasks = await tasksRepository.fetchAll()
@@ -44,7 +50,9 @@ export const useTasksListViewModel = (
   )
 
   return {
-    uiState: tasksListPresentation(tasks),
+    uiState: tasksListPresentation(tasks, listView),
+
+    switchView: setListView,
 
     completeTask: async (id: TaskId) => {
       await completeTaskUseCase.complete(id)
