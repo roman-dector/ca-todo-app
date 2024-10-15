@@ -28,6 +28,7 @@ export const TasksListView: FC<TasksListViewModel> = ({
     <section className={s.container}>
       <TasksViewFilter
         selected={uiState.view}
+        tasksCount={uiState.tasksCount}
         onViewSelect={switchView}
       />
 

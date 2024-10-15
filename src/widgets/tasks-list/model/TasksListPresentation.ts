@@ -5,6 +5,7 @@ import type {
 } from "entities/task"
 import {
   EmptyTasksListUiState,
+  TasksCount,
   TasksListUiState,
   TasksListView,
   TaskUiState,
@@ -32,12 +33,18 @@ export const tasksListPresentation = (
 
   let tasks: TaskEntry[]
 
+  const tasksCount: TasksCount = {
+    all: active.length + completed.length,
+    active: active.length,
+    completed: completed.length,
+  }
+
   switch (view) {
     case "all": {
       tasks = active.concat(completed)
 
       if (tasks.length === 0) {
-        return new EmptyTasksListUiState({ view: "all" })
+        return new EmptyTasksListUiState({ view, tasksCount })
       }
 
       break
@@ -49,6 +56,7 @@ export const tasksListPresentation = (
         return new EmptyTasksListUiState({
           message: "No active tasks",
           view,
+          tasksCount,
         })
       }
       break
@@ -60,6 +68,7 @@ export const tasksListPresentation = (
         return new EmptyTasksListUiState({
           message: "No completed tasks",
           view,
+          tasksCount,
         })
       }
 
@@ -75,5 +84,9 @@ export const tasksListPresentation = (
     taskPresentation(task)
   )
 
-  return new TasksListUiState({ tasks: tasksUiState, view })
+  return new TasksListUiState({
+    tasks: tasksUiState,
+    view,
+    tasksCount,
+  })
 }

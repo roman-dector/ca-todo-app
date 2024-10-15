@@ -1,6 +1,11 @@
 import { genTaskId, TaskId } from "entities/task"
 
 export type TasksListView = "all" | "active" | "completed"
+export type TasksCount = {
+  all: number
+  active: number
+  completed: number
+}
 
 export class TaskUiState {
   id: TaskId
@@ -26,6 +31,7 @@ export const taskUiState = (
 export class TasksListUiState {
   tasks: TaskUiState[]
   view: TasksListView
+  tasksCount: TasksCount
 
   constructor(arg: TasksListUiState) {
     Object.assign(this, arg)
@@ -37,12 +43,14 @@ export const tasksListUiState = (
 ): TasksListUiState => ({
   tasks: [],
   view: "active",
+  tasksCount: { all: 0, active: 0, completed: 0 },
   ...data,
 })
 
 export class EmptyTasksListUiState {
   message?: string = "Nothing to do"
   view: TasksListView
+  tasksCount: TasksCount
 
   constructor(arg?: EmptyTasksListUiState) {
     Object.assign(this, arg)
