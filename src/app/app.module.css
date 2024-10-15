@@ -8,7 +8,15 @@
 
 .heading {
   font-size: 80px;
+  margin-top: 50px;
   margin-bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .heading {
+    font-size: 60px;
+    margin-top: 0px;
+  }
 }
 
 .content {
@@ -17,5 +25,10 @@
   gap: 20px;
   align-items: center;
 
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
+
+  box-sizing: content-box;
+
+  padding: 15px;
 }

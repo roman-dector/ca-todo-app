@@ -1,15 +1,11 @@
-import { FC, HTMLAttributes, ReactNode } from "react"
+import { ButtonHTMLAttributes, FC, ReactNode } from "react"
 
 import s from "./IconButton.module.css"
 
 export type IconButtonProps = {
   icon: ReactNode
-
-  type?: "button" | "submit"
-  disabled?: boolean
-
   onClick?: () => void
-} & HTMLAttributes<HTMLButtonElement>
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
 export const IconButton: FC<IconButtonProps> = ({
   icon,

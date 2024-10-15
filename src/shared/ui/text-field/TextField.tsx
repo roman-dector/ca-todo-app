@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes } from "react"
+import { FC, InputHTMLAttributes } from "react"
 
 import cl from "classnames"
 
@@ -8,7 +8,7 @@ export type TextFieldProps = {
   value: string
   width?: string
   onChange: (value: string) => void
-} & Omit<HTMLAttributes<HTMLInputElement>, "onChange">
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">
 
 export const TextField: FC<TextFieldProps> = ({
   value,

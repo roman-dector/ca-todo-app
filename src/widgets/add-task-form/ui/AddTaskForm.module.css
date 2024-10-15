@@ -16,6 +16,13 @@
   width: 100%;
 }
 
+.hintContainer {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin: 0;
+}
+
 .hintMsg {
   color: #ee6c4d;
   font-weight: 600;

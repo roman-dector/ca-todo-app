@@ -36,9 +36,8 @@ export const TasksListView: FC<TasksListViewModel> = ({
       ) : (
         <ol className={s.list}>
           {uiState.tasks.map(task => (
-            <li>
+            <li key={task.id}>
               <Task
-                key={task.id}
                 uiState={task}
                 onRemove={removeTask}
                 onStatusChange={

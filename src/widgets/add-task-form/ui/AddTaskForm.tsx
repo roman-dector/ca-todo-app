@@ -31,34 +31,44 @@ export const AddTaskFormView: FC<AddTaskFormViewModel> = ({
 
   const isSubmitDisabled = uiState instanceof DisabledSubmitUiState
 
+  const submitButton = (
+    <Button
+      tabIndex={3}
+      text={"Add"}
+      type={"submit"}
+      disabled={isSubmitDisabled}
+    />
+  )
+
   return (
     <div className={s.container}>
       <form className={s.form} onSubmit={handleSubmit}>
         <div className={s.row}>
           <TextField
             tabIndex={1}
+            placeholder={"Task title"}
             value={uiState.title}
             onChange={changeTitle}
           />
 
-          <Button
-            tabIndex={3}
-            text={"Add"}
-            type={"submit"}
-            disabled={isSubmitDisabled}
-          />
+          <div className={"desktop"}>{submitButton}</div>
         </div>
 
         <TextArea
           tabIndex={2}
+          placeholder={"Task description"}
           value={uiState.description}
           onChange={changeDescription}
         />
+
+        <div className={"mobile"}>{submitButton}</div>
       </form>
 
-      {isSubmitDisabled && (
-        <p className={s.hintMsg}>{uiState.message}</p>
-      )}
+      <p className={s.hintContainer}>
+        {isSubmitDisabled && (
+          <span className={s.hintMsg}>{uiState.message}</span>
+        )}
+      </p>
     </div>
   )
 }

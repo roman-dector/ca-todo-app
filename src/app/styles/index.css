@@ -9,3 +9,21 @@ body {
 
   accent-color: #ee6c4d;
 }
+
+@media (max-width: 768px) {
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: contents;
+  }
+}
+
+@media (min-width: 769px) {
+  .desktop {
+    display: contents;
+  }
+  .mobile {
+    display: none;
+  }
+}
