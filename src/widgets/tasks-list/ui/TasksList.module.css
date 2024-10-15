@@ -1,0 +1,17 @@
+.emptyMessage {
+  font-size: 30px;
+}
+
+.list {
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.list li {
+  width: 100%;
+}

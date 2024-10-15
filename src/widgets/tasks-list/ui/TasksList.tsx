@@ -6,6 +6,8 @@ import { useTasksListViewModel } from "./viewModel"
 
 import { Task } from "./Task"
 
+import s from "./TasksList.module.css"
+
 export const TasksList = () => {
   const vm = useTasksListViewModel()
 
@@ -19,22 +21,23 @@ export const TasksListView: FC<TasksListViewModel> = ({
   reopenTask,
 }) => {
   if (uiState instanceof EmptyTasksListUiState) {
-    return <div>{uiState.message}</div>
+    return <p className={s.emptyMessage}>{uiState.message}</p>
   }
 
   return (
-    <section>
-      <h1>ToDo List</h1>
+    <ol className={s.list}>
       {uiState.tasks.map(task => (
-        <Task
-          key={task.id}
-          uiState={task}
-          onRemove={removeTask}
-          onStatusChange={
-            task.isCompleted ? reopenTask : completeTask
-          }
-        />
+        <li>
+          <Task
+            key={task.id}
+            uiState={task}
+            onRemove={removeTask}
+            onStatusChange={
+              task.isCompleted ? reopenTask : completeTask
+            }
+          />
+        </li>
       ))}
-    </section>
+    </ol>
   )
 }

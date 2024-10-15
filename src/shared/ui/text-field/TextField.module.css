@@ -1,0 +1,10 @@
+.input {
+  border-radius: 5px;
+  border: none;
+  background-color: white;
+  padding: 10px;
+}
+
+.input:focus-visible {
+  outline: 2px solid #ee6c4d;
+}

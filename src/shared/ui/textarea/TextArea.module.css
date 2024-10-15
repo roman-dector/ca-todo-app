@@ -1,0 +1,11 @@
+.textArea {
+  border-radius: 5px;
+  background-color: white;
+  border: none;
+
+  padding: 10px;
+}
+
+.textArea:focus-visible {
+  outline: 2px solid #ee6c4d;
+}

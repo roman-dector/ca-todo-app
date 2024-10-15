@@ -1,0 +1,22 @@
+.container {
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.hintMsg {
+  color: #ee6c4d;
+  font-weight: 600;
+}

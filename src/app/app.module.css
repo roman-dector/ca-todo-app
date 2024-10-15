@@ -1,0 +1,20 @@
+.root {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+}
+
+.heading {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.content {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+
+  width: 400px;
+}

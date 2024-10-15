@@ -1,0 +1,36 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 40px;
+  padding-inline: 20px;
+
+  border-radius: 5px;
+  border: none;
+
+  cursor: pointer;
+
+  color: currentColor;
+  font-weight: 600;
+
+  background-color: #ee6c4d;
+}
+
+.button:focus-visible {
+  outline: 2px solid #98c1d9;
+}
+
+@media (hover) {
+  .button:hover {
+    background: hsl(
+      11.552795031055902deg 82.56410256410257% 71.76470588235294%
+    );
+  }
+}
+
+.button:disabled {
+  background-color: hsl(11.552795031055902deg 15% 61.76470588235294%);
+
+  cursor: not-allowed;
+}

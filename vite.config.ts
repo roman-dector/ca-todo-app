@@ -1,5 +1,6 @@
 import { defineConfig, type Plugin } from "vite"
 import react from "@vitejs/plugin-react-swc"
+import svgr from "vite-plugin-svgr"
 import tsconfigPaths from "vite-tsconfig-paths"
 
 import ts from "rollup-plugin-ts"
@@ -24,7 +25,7 @@ const diPlugin = (options = {}): Plugin => {
 }
 
 export default defineConfig({
-  plugins: [react(), tsconfigPaths(), diPlugin()],
+  plugins: [svgr(), react(), tsconfigPaths(), diPlugin()],
 
   root: "./src/app",
   envDir: "../../",

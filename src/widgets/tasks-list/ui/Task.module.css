@@ -1,0 +1,26 @@
+.task {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  width: 100%;
+
+  padding: 15px 20px;
+  border-radius: 10px;
+  background-color: #3d5a80;
+}
+
+.checkboxContainer {
+  padding: 2px;
+}
+
+.textContent {
+  flex-grow: 1;
+}
+
+.title {
+  margin: 0;
+}
+
+.description {
+  margin-block: 5px;
+}

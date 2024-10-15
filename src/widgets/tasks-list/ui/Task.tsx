@@ -1,6 +1,14 @@
 import { FC } from "react"
-import { TaskUiState } from "../model"
 import { TaskId } from "entities/task"
+
+import { IconButton } from "shared/ui/button"
+import { Checkbox } from "shared/ui/checkbox"
+
+import { TaskUiState } from "../model"
+
+import TrashIcon from "./assets/trash.svg?react"
+
+import s from "./Task.module.css"
 
 export type TaskProps = {
   uiState: TaskUiState
@@ -12,17 +20,23 @@ export const Task: FC<TaskProps> = ({
   uiState,
   onRemove,
   onStatusChange,
-}) => {
-  return (
-    <article>
-      <h3>{uiState.title}</h3>
-      <input
-        type="checkbox"
+}) => (
+  <article className={s.task}>
+    <div className={s.checkboxContainer}>
+      <Checkbox
         checked={uiState.isCompleted}
         onChange={() => onStatusChange(uiState.id)}
       />
-      <p>{uiState.description}</p>
-      <button onClick={() => onRemove(uiState.id)}>Remove</button>
-    </article>
-  )
-}
+    </div>
+
+    <div className={s.textContent}>
+      <h1 className={s.title}>{uiState.title}</h1>
+      <p className={s.description}>{uiState.description}</p>
+    </div>
+
+    <IconButton
+      icon={<TrashIcon />}
+      onClick={() => onRemove(uiState.id)}
+    />
+  </article>
+)
