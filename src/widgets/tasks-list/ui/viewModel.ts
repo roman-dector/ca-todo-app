@@ -74,6 +74,12 @@ export const useTasksListViewModel = (
       await removeTaskUseCase.remove(id)
       await fetchTasks()
     },
+    removeAllCompleted: async () => {
+      await removeTaskUseCase.remove(
+        tasks.completed.map(([id]) => id)
+      )
+      await fetchTasks()
+    },
     reopenTask: async (id: TaskId) => {
       await reopenTaskUseCase.reopen(id)
       await fetchTasks()

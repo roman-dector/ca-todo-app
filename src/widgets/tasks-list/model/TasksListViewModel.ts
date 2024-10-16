@@ -16,5 +16,6 @@ export interface TasksListViewModel {
 
   completeTask: (id: TaskId) => void
   removeTask: (id: TaskId) => void
+  removeAllCompleted: () => void
   reopenTask: (id: TaskId) => void
 }

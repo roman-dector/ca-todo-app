@@ -7,6 +7,20 @@
   width: 100%;
 }
 
+.actionBar {
+  display: flex;
+  justify-content: start;
+
+  list-style: none;
+  padding: 0;
+
+  margin-top: 15px;
+}
+
+.actionBar > *:hover {
+  color: #ee6c4d;
+}
+
 .list {
   display: flex;
   flex-flow: column;
