@@ -27,12 +27,12 @@ const diPlugin = (options = {}): Plugin => {
 export default defineConfig({
   plugins: [svgr(), react(), tsconfigPaths(), diPlugin()],
 
-  root: "./src/app",
-  envDir: "../../",
+  root: "src/app", // index.html directory
+  envDir: "../../", // relative to "root"
   base: "./",
 
   build: {
-    outDir: "../../dist",
+    outDir: "../../dist", // relative to "root"
     target: "esnext",
   },
 })
