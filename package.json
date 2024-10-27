@@ -5,8 +5,16 @@
     "dev": "vite",
     "build": "tsc -b && vite build --emptyOutDir",
     "test": "vitest",
+    "test:run": "vitest run",
+    "test:types": "tsc --noEmit",
     "predeploy": "npm run build",
+    "prepare": "husky",
     "deploy": "gh-pages -d dist"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "dependencies": {
     "@types/node": "^22.7.5",
@@ -27,6 +35,8 @@
     "vite-tsconfig-paths": "^5.0.1"
   },
   "devDependencies": {
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "gh-pages": "^6.2.0",
     "husky": "^9.1.6",
     "vitest": "^2.1.2"
