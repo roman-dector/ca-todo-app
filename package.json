@@ -31,7 +31,7 @@
     "vite": "^5.4.9",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^5.0.1",
-    "vite-wessberg-di": "^0.0.0"
+    "vite-wessberg-di": "^0.1.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
