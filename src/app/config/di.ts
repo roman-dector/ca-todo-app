@@ -3,14 +3,15 @@ import {
   CompleteTaskUseCase,
   RemoveTaskUseCase,
   ReopenTaskUseCase,
-} from "features/task"
+  TasksListBuilder,
+  type TasksRepository,
+} from "application/task"
 
 import {
-  TasksDataSource,
-  TasksListBuilder,
+  TasksRepositoryImpl,
   TasksLocalDbDataSource,
-  TasksRepository,
-} from "entities/task"
+  type TasksDataSource,
+} from "dal/task"
 
 import { container } from "shared/di"
 import { EventBus, EventBusNanoEventsAdapter } from "shared/event-bus"
@@ -24,6 +25,6 @@ container.registerSingleton<ReopenTaskUseCase>()
 
 container.registerSingleton<TasksListBuilder>()
 
-container.registerSingleton<TasksRepository>()
+container.registerSingleton<TasksRepository, TasksRepositoryImpl>()
 
 container.registerSingleton<TasksDataSource, TasksLocalDbDataSource>()
