@@ -4,7 +4,7 @@ import { genTaskId, type Task } from "domain/task"
 
 import {
   TasksInMemoryDataSource,
-  TasksRepositoryImpl,
+  TasksRepositoryFacade,
 } from "dal/task"
 
 import { CompleteTaskUseCase } from "./CompleteTaskUseCase"
@@ -22,7 +22,7 @@ it("completed task moves to completed array", async () => {
   const tasksDataSource = new TasksInMemoryDataSource()
   await tasksDataSource.update([task])
 
-  const tasksRepository = new TasksRepositoryImpl(tasksDataSource)
+  const tasksRepository = new TasksRepositoryFacade(tasksDataSource)
   const tasksListBuilder = new TasksListBuilder(tasksRepository)
 
   const sut = new CompleteTaskUseCase(
@@ -52,7 +52,7 @@ it("task completes only ones", async () => {
   const tasksDataSource = new TasksInMemoryDataSource()
   await tasksDataSource.update([task])
 
-  const tasksRepository = new TasksRepositoryImpl(tasksDataSource)
+  const tasksRepository = new TasksRepositoryFacade(tasksDataSource)
   const tasksListBuilder = new TasksListBuilder(tasksRepository)
 
   const sut = new CompleteTaskUseCase(

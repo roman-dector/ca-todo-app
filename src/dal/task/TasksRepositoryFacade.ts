@@ -8,7 +8,7 @@ import type { TasksRepository } from "application/task"
 
 import type { TasksDataSource } from "./TasksDataSource"
 
-export class TasksRepositoryImpl implements TasksRepository {
+export class TasksRepositoryFacade implements TasksRepository {
   constructor(private readonly tasksDataSource: TasksDataSource) {}
 
   async fetchAll(): Promise<TasksSplittedByStatus> {

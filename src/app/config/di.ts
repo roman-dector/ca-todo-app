@@ -8,7 +8,7 @@ import {
 } from "application/task"
 
 import {
-  TasksRepositoryImpl,
+  TasksRepositoryFacade,
   TasksLocalDbDataSource,
   type TasksDataSource,
 } from "dal/task"
@@ -25,6 +25,6 @@ container.registerSingleton<ReopenTaskUseCase>()
 
 container.registerSingleton<TasksListBuilder>()
 
-container.registerSingleton<TasksRepository, TasksRepositoryImpl>()
+container.registerSingleton<TasksRepository, TasksRepositoryFacade>()
 
 container.registerSingleton<TasksDataSource, TasksLocalDbDataSource>()

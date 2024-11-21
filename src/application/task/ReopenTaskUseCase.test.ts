@@ -4,7 +4,7 @@ import { genTaskId, type Task } from "domain/task"
 
 import {
   TasksInMemoryDataSource,
-  TasksRepositoryImpl,
+  TasksRepositoryFacade,
 } from "dal/task"
 
 import { ReopenTaskUseCase } from "./ReopenTaskUseCase"
@@ -22,7 +22,7 @@ it("reopen task moves to active array", async () => {
   const tasksDataSource = new TasksInMemoryDataSource()
   await tasksDataSource.update([task])
 
-  const tasksRepository = new TasksRepositoryImpl(tasksDataSource)
+  const tasksRepository = new TasksRepositoryFacade(tasksDataSource)
   const tasksListBuilder = new TasksListBuilder(tasksRepository)
 
   const sut = new ReopenTaskUseCase(tasksListBuilder, tasksRepository)
@@ -47,7 +47,7 @@ it("tasks reopens only ones", async () => {
   const tasksDataSource = new TasksInMemoryDataSource()
   await tasksDataSource.update([task])
 
-  const tasksRepository = new TasksRepositoryImpl(tasksDataSource)
+  const tasksRepository = new TasksRepositoryFacade(tasksDataSource)
   const tasksListBuilder = new TasksListBuilder(tasksRepository)
 
   const sut = new ReopenTaskUseCase(tasksListBuilder, tasksRepository)

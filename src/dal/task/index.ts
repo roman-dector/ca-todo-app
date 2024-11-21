@@ -1,4 +1,4 @@
-export { TasksRepositoryImpl } from "./TasksRepositoryImpl"
+export { TasksRepositoryFacade } from "./TasksRepositoryFacade"
 export { TasksLocalDbDataSource } from "./TasksLocalDbDataSource"
 export { TasksInMemoryDataSource } from "./TasksInMemoryDataSource"
 

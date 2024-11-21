@@ -4,7 +4,7 @@ import { AddTaskUseCase, NewTaskData } from "./AddTaskUseCase"
 
 import {
   TasksInMemoryDataSource,
-  TasksRepositoryImpl,
+  TasksRepositoryFacade,
 } from "dal/task"
 
 import { TasksListBuilder } from "./TasksListBuilder"
@@ -17,7 +17,7 @@ it("task with filled title and description is added", async () => {
   }
 
   const tasksDataSource = new TasksInMemoryDataSource()
-  const tasksRepository = new TasksRepositoryImpl(tasksDataSource)
+  const tasksRepository = new TasksRepositoryFacade(tasksDataSource)
   const tasksListBuilder = new TasksListBuilder(tasksRepository)
   const sut = new AddTaskUseCase(tasksListBuilder, tasksRepository)
 
@@ -37,7 +37,7 @@ it("newly added task has active status", async () => {
   }
 
   const tasksDataSource = new TasksInMemoryDataSource()
-  const tasksRepository = new TasksRepositoryImpl(tasksDataSource)
+  const tasksRepository = new TasksRepositoryFacade(tasksDataSource)
   const tasksListBuilder = new TasksListBuilder(tasksRepository)
   const sut = new AddTaskUseCase(tasksListBuilder, tasksRepository)
 
@@ -57,7 +57,7 @@ it("task with empty title is not added", async () => {
   }
 
   const tasksDataSource = new TasksInMemoryDataSource()
-  const tasksRepository = new TasksRepositoryImpl(tasksDataSource)
+  const tasksRepository = new TasksRepositoryFacade(tasksDataSource)
   const tasksListBuilder = new TasksListBuilder(tasksRepository)
   const sut = new AddTaskUseCase(tasksListBuilder, tasksRepository)
 
@@ -77,7 +77,7 @@ it("task with empty description is not added", async () => {
   }
 
   const tasksDataSource = new TasksInMemoryDataSource()
-  const tasksRepository = new TasksRepositoryImpl(tasksDataSource)
+  const tasksRepository = new TasksRepositoryFacade(tasksDataSource)
   const tasksListBuilder = new TasksListBuilder(tasksRepository)
   const sut = new AddTaskUseCase(tasksListBuilder, tasksRepository)
 
