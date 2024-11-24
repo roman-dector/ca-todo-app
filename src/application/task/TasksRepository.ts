@@ -1,6 +1,9 @@
-import type { TasksList, TasksSplittedByStatus } from "domain/task"
+import type {
+  TasksList,
+  TasksEntrySplittedByStatus,
+} from "domain/task"
 
 export interface TasksRepository {
-  fetchAll(): Promise<TasksSplittedByStatus>
+  fetchAll(): Promise<TasksEntrySplittedByStatus>
   updateTasks(data: TasksList): Promise<void>
 }

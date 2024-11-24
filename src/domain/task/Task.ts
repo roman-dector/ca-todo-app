@@ -1,6 +1,10 @@
 export type TaskId = Brand<string>
 
-export type TaskStatus = "active" | "completed"
+export const TaskStatus = {
+  active: "active",
+  completed: "completed",
+} as const
+export type TaskStatus = Keys<typeof TaskStatus>
 
 export interface Task {
   readonly id: TaskId
@@ -11,7 +15,7 @@ export interface Task {
 
 export const genTaskId = () => crypto.randomUUID() as TaskId
 
-export const testTask = (data: Partial<Task> = {}): Task => ({
+export const createTestTask = (data: Partial<Task> = {}): Task => ({
   id: genTaskId(),
   title: "title",
   description: "description",

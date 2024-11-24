@@ -10,7 +10,7 @@ import {
 import {
   TaskId,
   tasksSplittedByStatus,
-  TasksSplittedByStatus,
+  TasksEntrySplittedByStatus,
 } from "domain/task"
 
 import { container } from "shared/di"
@@ -32,7 +32,7 @@ export const useTasksListViewModel = (
   tasksRepository = container.get<TasksRepository>(),
   eventBus = container.get<EventBus>()
 ): TasksListViewModel => {
-  const [tasks, setTasks] = useState<TasksSplittedByStatus>(
+  const [tasks, setTasks] = useState<TasksEntrySplittedByStatus>(
     tasksSplittedByStatus()
   )
 

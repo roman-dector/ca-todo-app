@@ -2,24 +2,29 @@ import { Task, TaskId } from "./Task"
 
 export type TaskEntry = [TaskId, Task]
 
-export interface TasksSplittedByStatus {
+export interface TasksEntrySplittedByStatus {
   active: TaskEntry[]
   completed: TaskEntry[]
 }
 
+export interface TasksSplittedByStatus {
+  active: Task[]
+  completed: Task[]
+}
+
 export const tasksSplittedByStatus = (
-  data: Partial<TasksSplittedByStatus> = {}
-): TasksSplittedByStatus => ({
+  data: Partial<TasksEntrySplittedByStatus> = {}
+): TasksEntrySplittedByStatus => ({
   active: [],
   completed: [],
   ...data,
 })
 
 export class TasksList {
-  active: Map<TaskId, Task>
-  completed: Map<TaskId, Task>
+  private active: Map<TaskId, Task>
+  private completed: Map<TaskId, Task>
 
-  constructor({ active, completed }: TasksSplittedByStatus) {
+  constructor({ active, completed }: TasksEntrySplittedByStatus) {
     this.active = new Map(active)
     this.completed = new Map(completed)
   }
@@ -58,6 +63,13 @@ export class TasksList {
     if (task) {
       this.completed.delete(id)
       this.active.set(id, { ...task, status: "active" })
+    }
+  }
+
+  toSplittedByStatus(): TasksSplittedByStatus {
+    return {
+      active: Array.from(this.active.values()),
+      completed: Array.from(this.completed.values()),
     }
   }
 }

@@ -1,7 +1,7 @@
 import type {
   Task,
   TasksList,
-  TasksSplittedByStatus,
+  TasksEntrySplittedByStatus,
 } from "domain/task"
 
 import type { TasksRepository } from "application/task"
@@ -11,7 +11,7 @@ import type { TasksDataSource } from "./TasksDataSource"
 export class TasksRepositoryFacade implements TasksRepository {
   constructor(private readonly tasksDataSource: TasksDataSource) {}
 
-  async fetchAll(): Promise<TasksSplittedByStatus> {
+  async fetchAll(): Promise<TasksEntrySplittedByStatus> {
     const data = await this.tasksDataSource.fetchAll()
 
     return this.tasksToDomain(data)
@@ -23,25 +23,31 @@ export class TasksRepositoryFacade implements TasksRepository {
     return this.tasksDataSource.update(tasks)
   }
 
-  protected tasksListToStore(tasksList: TasksList): Task[] {
-    return [
-      ...tasksList.active.values(),
-      ...tasksList.completed.values(),
-    ]
+  private tasksListToStore(tasksList: TasksList): Task[] {
+    const { active, completed } = tasksList.toSplittedByStatus()
+
+    return [...active, ...completed]
   }
 
-  protected tasksToDomain(tasks: Task[]): TasksSplittedByStatus {
-    return tasks.reduce<TasksSplittedByStatus>(
-      (acc, task) => {
-        if (task.status === "completed") {
-          acc.completed.push([task.id, task])
-        } else {
-          acc.active.push([task.id, task])
-        }
+  private tasksToDomain(tasks: Task[]): TasksEntrySplittedByStatus {
+    const accumulator: TasksEntrySplittedByStatus = {
+      active: [],
+      completed: [],
+    }
 
-        return acc
-      },
-      { active: [], completed: [] }
-    )
+    return tasks.reduce(this.categorizeByStatus, accumulator)
+  }
+
+  private categorizeByStatus(
+    accumulator: TasksEntrySplittedByStatus,
+    task: Task
+  ): TasksEntrySplittedByStatus {
+    if (task.status === "completed") {
+      accumulator.completed.push([task.id, task])
+    } else {
+      accumulator.active.push([task.id, task])
+    }
+
+    return accumulator
   }
 }

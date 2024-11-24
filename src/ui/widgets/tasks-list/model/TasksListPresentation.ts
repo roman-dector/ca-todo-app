@@ -1,5 +1,5 @@
 import type {
-  TasksSplittedByStatus,
+  TasksEntrySplittedByStatus,
   Task,
   TaskEntry,
 } from "domain/task"
@@ -28,7 +28,7 @@ const taskPresentation = ({
   })
 
 export const tasksListPresentation = (
-  appState: TasksSplittedByStatus,
+  appState: TasksEntrySplittedByStatus,
   view: TasksListView,
   status: TasksListStatus
 ): TasksListViewModel["uiState"] => {

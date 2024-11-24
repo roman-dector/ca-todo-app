@@ -9,15 +9,15 @@ import {
 } from "./TasksListUiState"
 import {
   tasksSplittedByStatus,
-  TasksSplittedByStatus,
-  testTask,
+  TasksEntrySplittedByStatus,
+  createTestTask,
 } from "domain/task"
 
 it.each<TasksListView>(["all", "active", "completed"])(
   "showing empty list state when no %s tasks",
   view => {
     // Arrange
-    const appState: TasksSplittedByStatus = {
+    const appState: TasksEntrySplittedByStatus = {
       active: [],
       completed: [],
     }
@@ -38,8 +38,8 @@ it.each<TasksListView>(["all", "active", "completed"])(
 it.each<TasksListView>(["all", "active", "completed"])(
   "showing existing %s tasks",
   view => {
-    const task = testTask()
-    const appState: TasksSplittedByStatus = {
+    const task = createTestTask()
+    const appState: TasksEntrySplittedByStatus = {
       active: [[task.id, task]],
       completed: [[task.id, task]],
     }
