@@ -1,14 +1,12 @@
 import { NewTaskData } from "application/task"
-import {
-  AddTaskFormUiState,
-  DisabledSubmitUiState,
-} from "./AddTaskFormUiState"
+
+import type { AddTaskFormUiState } from "./AddTaskFormUiState"
 
 export interface AddTaskFormViewModel {
-  uiState: AddTaskFormUiState | DisabledSubmitUiState
+  uiState: AddTaskFormUiState
 
-  changeTitle(title: string): void
-  changeDescription(description: string): void
+  changeTitle(title: string): Promise<void>
+  changeDescription(description: string): Promise<void>
 
-  addTask(task: NewTaskData): void
+  addTask(task: NewTaskData): Promise<void>
 }

@@ -1,4 +1,4 @@
-export * from "./AddTaskFormUiState"
+export { AddTaskFormUiState } from "./AddTaskFormUiState"
 
 export type { AddTaskFormViewModel } from "./AddTaskFormViewModel"
 

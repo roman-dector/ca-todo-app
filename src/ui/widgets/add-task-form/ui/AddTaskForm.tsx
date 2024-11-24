@@ -1,6 +1,6 @@
 import { FC, FormEventHandler } from "react"
 
-import { AddTaskFormViewModel, DisabledSubmitUiState } from "../model"
+import { AddTaskFormViewModel, AddTaskFormUiState } from "../model"
 import { useAddTaskFormViewModel } from "./useAddTaskFormViewModel"
 
 import s from "./AddTaskForm.module.css"
@@ -30,7 +30,8 @@ export const AddTaskFormView: FC<AddTaskFormViewModel> = ({
     })
   }
 
-  const isSubmitDisabled = uiState instanceof DisabledSubmitUiState
+  const isSubmitDisabled =
+    uiState instanceof AddTaskFormUiState.DisabledSubmit
 
   const submitButton = (
     <Button

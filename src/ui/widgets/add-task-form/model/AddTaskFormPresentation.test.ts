@@ -1,10 +1,7 @@
 import { it, expect } from "vitest"
 
 import { addTaskFormPresentation } from "./AddTaskFormPresentation"
-import {
-  AddTaskFormUiState,
-  DisabledSubmitUiState,
-} from "./AddTaskFormUiState"
+import { AddTaskFormUiState } from "./AddTaskFormUiState"
 import { NewTaskData } from "application/task"
 
 it("ready to submit when all fields are filled", () => {
@@ -15,7 +12,7 @@ it("ready to submit when all fields are filled", () => {
 
   const uiState = addTaskFormPresentation(userInput)
 
-  expect(uiState).instanceOf(AddTaskFormUiState)
+  expect(uiState).instanceOf(AddTaskFormUiState.ReadyToSubmit)
 })
 
 it("submit disabled when title is empty", () => {
@@ -26,7 +23,7 @@ it("submit disabled when title is empty", () => {
 
   const uiState = addTaskFormPresentation(userInput)
 
-  expect(uiState).instanceOf(DisabledSubmitUiState)
+  expect(uiState).instanceOf(AddTaskFormUiState.DisabledSubmit)
 })
 
 it("submit disabled when description is empty", () => {
@@ -37,5 +34,5 @@ it("submit disabled when description is empty", () => {
 
   const uiState = addTaskFormPresentation(userInput)
 
-  expect(uiState).instanceOf(DisabledSubmitUiState)
+  expect(uiState).instanceOf(AddTaskFormUiState.DisabledSubmit)
 })

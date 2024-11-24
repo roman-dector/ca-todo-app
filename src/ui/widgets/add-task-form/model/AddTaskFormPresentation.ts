@@ -1,16 +1,15 @@
 import { NewTaskData } from "application/task"
-import { AddTaskFormViewModel } from "./AddTaskFormViewModel"
-import {
-  AddTaskFormUiState,
-  DisabledSubmitUiState,
-} from "./AddTaskFormUiState"
+
+import { AddTaskFormUiState } from "./AddTaskFormUiState"
+
+import type { AddTaskFormViewModel } from "./AddTaskFormViewModel"
 
 export const addTaskFormPresentation = (
   data: NewTaskData
 ): AddTaskFormViewModel["uiState"] => {
   if (!(data.title && data.description)) {
-    return new DisabledSubmitUiState(data)
+    return new AddTaskFormUiState.DisabledSubmit(data)
   }
 
-  return new AddTaskFormUiState(data)
+  return new AddTaskFormUiState.ReadyToSubmit(data)
 }

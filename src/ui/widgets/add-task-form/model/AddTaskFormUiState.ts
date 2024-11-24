@@ -1,19 +1,28 @@
 import { NewTaskData } from "application/task"
 
-export class AddTaskFormUiState implements NewTaskData {
+class ReadyToSubmit implements NewTaskData {
   title: string
   description: string
 
-  constructor(arg: AddTaskFormUiState) {
+  constructor(arg: ReadyToSubmit) {
     Object.assign(this, arg)
   }
 }
 
-export class DisabledSubmitUiState extends AddTaskFormUiState {
+class DisabledSubmit extends ReadyToSubmit {
   message?: string = "You should fill all fields"
 
-  constructor(arg: DisabledSubmitUiState) {
+  constructor(arg: DisabledSubmit) {
     super(arg)
     Object.assign(this, arg)
   }
 }
+
+export const AddTaskFormUiState = {
+  DisabledSubmit,
+  ReadyToSubmit,
+}
+
+export type AddTaskFormUiState = InstanceValues<
+  typeof AddTaskFormUiState
+>
