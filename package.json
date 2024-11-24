@@ -17,8 +17,11 @@
     }
   },
   "dependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/node": "^22.7.5",
-    "@types/react": "^18.3.11",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react-swc": "^3.7.1",
     "@wessberg/di": "^2.1.0",
@@ -31,7 +34,8 @@
     "vite": "^5.4.9",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^5.0.1",
-    "vite-wessberg-di": "^0.1.1"
+    "vite-wessberg-di": "^0.1.1",
+    "vitest": "^2.1.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
@@ -40,6 +44,6 @@
     "cz-conventional-changelog": "^3.3.0",
     "gh-pages": "^6.2.0",
     "husky": "^9.1.6",
-    "vitest": "^2.1.2"
+    "jsdom": "^25.0.1"
   }
 }
