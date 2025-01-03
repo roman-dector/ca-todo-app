@@ -9,6 +9,15 @@ class ReadyToSubmit implements NewTaskData {
   }
 }
 
+export const readyToSubmitUiState = (
+  data: Partial<ReadyToSubmit> = {}
+): ReadyToSubmit =>
+  new ReadyToSubmit({
+    title: "",
+    description: "",
+    ...data,
+  })
+
 class DisabledSubmit extends ReadyToSubmit {
   message?: string = "You should fill all fields"
 
@@ -17,6 +26,16 @@ class DisabledSubmit extends ReadyToSubmit {
     Object.assign(this, arg)
   }
 }
+
+export const disabledSubmitUiState = (
+  data: Partial<DisabledSubmit> = {}
+): DisabledSubmit =>
+  new DisabledSubmit({
+    title: "",
+    description: "",
+    message: undefined,
+    ...data,
+  })
 
 export const AddTaskFormUiState = {
   DisabledSubmit,
